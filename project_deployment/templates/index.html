@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Regression Models</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: url('https://i.pinimg.com/1200x/48/ac/a5/48aca54983dfed791575c3bffc59cc1d.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            text-align: center;
+        }
+
+        .overlay {
+            background: rgba(0, 0, 0, 0.6);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .container {
+            display: flex;
+            gap: 50px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 30px;
+            width: 280px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+            backdrop-filter: blur(8px);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 1.8em;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        input, select, button {
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            font-size: 1em;
+        }
+
+        button {
+            background: #4cafef;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #1e88e5;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay">
+        {% if page == "home" %}
+            <h1>Choose Your Regression Model</h1>
+            <div class="container">
+                <a href="/slr"><div class="card"><h2>Simple Linear Regression</h2></div></a>
+                <a href="/mlr"><div class="card"><h2>Multiple Linear Regression</h2></div></a>
+            </div>
+        {% elif page == "slr" %}
+            <h1>Simple Linear Regression</h1>
+            <form method="POST">
+                <input type="number" step="0.1" name="years" placeholder="Years of Experience" required>
+                <button type="submit">Predict Salary</button>
+            </form>
+            {% if prediction %}
+                <div class="result">Predicted Salary: {{ prediction }}</div>
+            {% endif %}
+            <a href="/" style="color:#fff; margin-top:20px; display:block;">⬅ Back</a>
+        {% elif page == "mlr" %}
+            <h1>Multiple Linear Regression</h1>
+            <form method="POST">
+                <input type="number" step="0.1" name="rnd" placeholder="R&D Spend" required>
+                <input type="number" step="0.1" name="admin" placeholder="Administration Spend" required>
+                <input type="number" step="0.1" name="marketing" placeholder="Marketing Spend" required>
+                <select name="state" required>
+                    <option value="0">New York</option>
+                    <option value="1">California</option>
+                    <option value="2">Florida</option>
+                </select>
+                <button type="submit">Predict Profit</button>
+            </form>
+            {% if prediction %}
+                <div class="result">Predicted Profit: {{ prediction }}</div>
+            {% endif %}
+            <a href="/" style="color:#fff; margin-top:20px; display:block;">⬅ Back</a>
+        {% endif %}
+    </div>
+</body>
+</html>
